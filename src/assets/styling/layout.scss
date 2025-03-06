@@ -1,0 +1,7 @@
+$widths: 0, 100;
+
+@each $v in $widths {
+    .w-#{$v} {
+        width: #{$v}#{'%'};
+    }
+}

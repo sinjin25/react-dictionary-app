@@ -1,0 +1,59 @@
+@use './assets/styling/reset.scss';
+@use './assets/styling/layout.scss';
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+body {
+    background: #F2F2F2;
+    font-family: 'Inconsolata';
+
+    &:has(#app[mode="dark"]) {
+        background: black;
+    }
+
+    @media only screen and (min-width: 1200px) {
+        background: white;
+
+        &:has(#app[mode="dark"]) {
+            background: #050505;
+        }
+    }
+}
+
+#app {
+    width: 375px;
+    height: 1065px;
+    margin: 0 auto;
+
+    padding: 24px;
+    padding-bottom: 64px;
+
+    background: white;
+
+    &[font="Mono"] {
+        font-family: "Inconsolata"
+    }
+
+    &[font="Serif"] {
+        font-family: "Lora"
+    }
+
+    &[font="Sans-Serif"] {
+        font-family: "Inter"
+    }
+
+    @media only screen and (min-width: 768px) {
+        width: 768px;
+        height: 1197px;
+        padding: 58px 40px 118px 39px;
+    }
+
+    @media only screen and (min-width: 1200px) {
+        width: 736px;
+        min-height: 1080px;
+        padding: 58px 0 124px 0;
+    }
+}
+
+#app[mode="dark"] {
+    background: #050505;
+}

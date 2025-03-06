@@ -1,0 +1,53 @@
+div[ns="font-menu"] {
+
+    &.font-menu,
+    .font-menu {
+        background: white;
+        color: #2d2d2d;
+        padding: 24px 0px 24px 24px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        width: 182px;
+        border-radius: 16px;
+        box-shadow: 0 5px 30px 0 rgba(0 0 0 / .1);
+        z-index: 1;
+
+        >div {
+            cursor: pointer;
+
+            &:hover {
+                color: #a445ED;
+            }
+        }
+
+        >div:nth-child(1) {
+            font-family: "Inter";
+        }
+
+        >div:nth-child(2) {
+            font-family: "Lora";
+        }
+
+        >div:nth-child(3) {
+            font-family: "Inconsolata";
+        }
+
+        @media only screen and (min-width: 768px) {
+            font-size: 18px;
+            line-height: 24px;
+        }
+    }
+}
+
+div[ns="font-menu"][mode="dark"] {
+
+    &.font-menu,
+    .font-menu {
+        background: #1f1f1f;
+        box-shadow: 0 5px 30px 0 rgba(164, 69, 237, .1);
+        color: white;
+    }
+}

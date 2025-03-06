@@ -1,0 +1,84 @@
+div[ns="word"] {
+
+    &.word,
+    .word {
+        color: #2d2d2d;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 31px;
+
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 42px;
+        }
+    }
+
+    .word_ {
+        &stack {
+            display: grid;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        &icon-play {
+            cursor: pointer;
+
+            svg {
+                width: 48px;
+
+                g {
+                    fill: #A445ED;
+                }
+
+                circle {
+                    opacity: .25;
+                }
+
+                &:hover {
+                    circle {
+                        opacity: 1;
+                    }
+
+                    path {
+                        fill: white;
+                    }
+                }
+
+                @media only screen and (min-width: 768px) {
+                    margin-bottom: 6px; // why they want an offset lol
+                    width: 75px;
+                }
+            }
+        }
+
+        &word {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.06;
+
+            @media only screen and (min-width: 768px) {
+                font-size: 64px;
+            }
+        }
+
+        &pronounce {
+            font-size: 18px;
+            line-height: 24px;
+            color: #a445ED;
+
+            @media only screen and (min-width: 768px) {
+                font-size: 24px;
+                line-height: 29px;
+            }
+        }
+    }
+}
+
+div[ns="word"][mode="dark"] {
+
+    &.word,
+    .word {
+        color: white;
+    }
+}

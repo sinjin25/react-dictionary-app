@@ -1,0 +1,135 @@
+div[ns="top"] {
+
+    div svg {
+        cursor: pointer;
+    }
+
+    &.top,
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 24px;
+
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 52px;
+        }
+    }
+
+    .top_ {
+        &icon {
+            width: 28px;
+
+            @media only screen and (min-width: 768px) {
+                width: 32px;
+            }
+        }
+
+        &right-grid {
+            display: flex;
+            gap: 16px;
+
+            @media only screen and (min-width: 768px) {
+                // should be 9px - 26px - 20px
+                // so we'll just control it through padding
+                gap: 9px;
+
+                >div {
+                    &:nth-child(2) {
+                        margin-right: 17px;
+                    }
+
+                    &:nth-child(3) {
+                        margin-right: 17px;
+                    }
+
+                    &:nth-child(4) {
+                        margin-right: 11px;
+                    }
+                }
+            }
+        }
+
+        &font-select {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 24px;
+
+            @media only screen and (min-width: 768px) {
+                font-size: 18px;
+                line-height: 24px;
+            }
+        }
+
+        &down-arrow {
+            width: 12px;
+        }
+
+        &switch {
+            cursor: pointer;
+
+            padding: 3px;
+            width: 40px;
+            height: 20px;
+            background: #979797;
+            border-radius: 10px;
+
+            &-ball {
+                height: 14px;
+                width: 14px;
+                border-radius: 100%;
+                background: white;
+            }
+
+            &.--on {
+                background: #a445ED;
+
+                .top_switch-ball {
+                    margin-left: auto;
+                }
+            }
+        }
+
+        &separator {
+            border-right: 1px solid #e9e9e9;
+        }
+    }
+}
+
+div[ns="top"][mode="dark"] {
+    .top_ {
+        &right-grid {
+            >div:nth-child(1) {
+                color: white;
+            }
+
+            div:nth-child(5) {
+                svg path {
+                    stroke: #a445ED;
+                }
+            }
+        }
+    }
+}
+
+// deep css for FontMenu
+div[ns="top"] .top_down-arrow {
+    position: relative;
+
+    &:hover .top_click-assist {
+        display: block;
+    }
+
+    .top_click-assist {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: -35px;
+        min-height: 162px;
+        padding: 35px;
+        z-index: 1;
+    }
+
+    div[ns="font-menu"] {}
+}
