@@ -1,5 +1,7 @@
 # Learning React Portfolio Test
 
+Live site: https://sinjin25.github.io/react-dictionary-app/
+
 Learning React as a Vue developer since that's the most popular framework right now.
 
 Time taken: 3 days for React then 7-8 hours implementation
@@ -20,6 +22,7 @@ Relevant challenge link: https://www.frontendmentor.io/challenges/dictionary-web
   - [x] Sync with third-party API
   - [x] Debounce
 - [x] TypeScript integration
+- [x] Deploy
 
 # Notable Features
 
