@@ -1,0 +1,27 @@
+div[ns="no-results"] {
+
+    &.no-results,
+    .no-results {
+        margin-top: 132px;
+        text-align: center;
+    }
+
+    .no-results_ {
+        &emoji {
+            font-size: 64px;
+            margin-bottom: 44px;
+        }
+
+        &title {
+            font-size: 20px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        &text {
+            font-size: 18px;
+            line-height: 24px;
+            color: #757575;
+        }
+    }
+}

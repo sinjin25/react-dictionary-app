@@ -7,14 +7,15 @@ import ThemeContext from '../context/theme'
 export default function Search({handleSearch, value}) {
     const dataContext = useContext(DataContext)
     const themeContext = useContext(ThemeContext)
-    const datalistJsx = dataContext.data.map((anItem, index) => {
+    const datalistJsx = 
+    dataContext.data.map((anItem, index) => {
         return <option value={anItem.word} key={index}></option>
     })
 
     return (
     <>
         <div ns="search" className="search" mode={themeContext.darkMode ? 'dark' :''}>
-            <input className='search_input w-100' list="words" placeholder="I only implemented 'keyboard,' 'run,' and 'race'"
+            <input className='search_input w-100' list="words" placeholder="Search for any word"
                 onChange={(e) => {
                     handleSearch(e.target.value)
                 }}

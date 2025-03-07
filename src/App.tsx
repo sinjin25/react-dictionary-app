@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import './App.scss'
 import Top from './components/Top';
 import Search from './components/Search';
@@ -7,45 +7,57 @@ import Definition from './components/Definition';
 import DataContext from './context/data';
 import ThemeContext from './context/theme';
 import { mockData } from './context/data'
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { ApiJson, fetchData, MOCK_DATA } from './api';
+import NoResults from './components/NoResults';
 
 type DictionaryProps = {
-    activeEntry: number,
-    changeEntry: (id) => void,
     toggleDark: (id) => void,
     setFont: (str: 'Mono' | 'Serif' | 'Sans-Serif') => void,
 }
 
-function Dictionary({activeEntry, changeEntry, toggleDark, setFont}:DictionaryProps) {
+/* let timeoutId = -1 */
+function Dictionary({toggleDark, setFont}:DictionaryProps) {
     // use a map for bigger data sets
-    const dataContext = useContext(DataContext)
     const themeContext = useContext(ThemeContext)
     const [inputValue, setInputValue] = useState('keyboard')
-
-    const findActiveEntryByWord = (str: string) => {
-        const lastId = activeEntry
-        const id = dataContext.data.findIndex((i) => {
-            return i.word === str
-        })
-        if (id === -1) return lastId
-        return id
-    }
-
+    const [data, setData] = useState<ApiJson>(MOCK_DATA)
+    const [wordFound, setWordFound] = useState(true)
+    const timeoutId = useRef(-1) // { current: [], reactiveshit }
+    
     const handleSearch = (str: string) => {
+        clearTimeout(timeoutId.current)
+
         setInputValue(str)
         if (!str) return
-        const id = findActiveEntryByWord(str)
-        changeEntry(id)
+
+        timeoutId.current = window.setTimeout(() => {
+            fetchData(str)
+            .then((r) => {
+                console.log('fetched', r)
+                if (r[0] && 'word' in r[0]) {
+                    setData(r[0])
+                    setWordFound(true)
+                } else {
+                    setWordFound(false)
+                }
+                
+            })
+        }, 600)
     }
 
     return (
-      
         <section id="app" mode={themeContext.darkMode && 'dark'} font={themeContext.font}>
             <Top toggleDark={toggleDark} setFont={setFont}></Top>
             <Search handleSearch={handleSearch} value={inputValue}></Search>
-            <Word></Word>
-            <Definition></Definition>
-            
+            {
+                wordFound
+                ? <>
+                    <Word data={data}></Word>
+                    <Definition data={data}></Definition>
+                </>
+                : <NoResults></NoResults>
+            }
         </section>
       
     );
@@ -71,7 +83,7 @@ export default function App() {
         activeEntryId: activeEntry,
         data: mockData,
       }}>
-        <Dictionary activeEntry={activeEntry} changeEntry={changeEntry} toggleDark={toggleDark} setFont={setFont}></Dictionary>
+        <Dictionary toggleDark={toggleDark} setFont={setFont}></Dictionary>
     </DataContext>
     </ThemeContext>
 }

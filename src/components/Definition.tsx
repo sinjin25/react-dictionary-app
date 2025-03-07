@@ -2,36 +2,37 @@ import { useContext } from 'react'
 import React from 'react'
 import DataContext from '../context/data'
 import ThemeContext from '../context/theme'
-import { Entry } from '../context/data'
 import './Definition.scss'
-// { pos: string, meaning: string[], synonyms: string[]}
-type DefinitionProps = {
-    definition: Entry,
+import { ApiJson } from '../api'
+
+type DefinitionListProps = {
+    data: ApiJson
 }
-export function Definition({definition}: DefinitionProps) {
-    const senseList = definition.sense.map((d, index) => {
-        return (<li key={index}><span>{d}</span></li>)
+type DefinitionProps = {
+    data: ApiJson['meanings'][number],
+}
+export function Definition({data}: DefinitionProps) {
+    const senseList = data.definitions.map((d, index) => {
+        return (<li key={index}>
+            <div><span>{d.definition}</span></div>
+            {
+                d.example &&
+                <div className="definition_example">"{d.example}"</div>
+            }
+        </li>)
     })
 
-    const hasSynonyms = definition.synonyms && definition.synonyms.length
+    const hasSynonyms = data.synonyms && data.synonyms.length
 
-    const synonymnsList = definition.synonyms
-    ? definition.synonyms.map((d, index) => {
+    const synonymnsList = data.synonyms
+    ? data.synonyms.map((d, index) => {
         return <div key={index}>{d}</div>
-    })
-    : null
-
-    const hasExamples = definition.example && definition.example.length
-
-    const exampleList = definition.example
-    ? definition.example.map((d, index) => {
-        return <div key={index}>"{d}"</div>
     })
     : null
 
     return <div ns="definition" className="definition">
         <div className="definition_meaning-separator">
-                <div className="definition_pos">{definition.pos}</div>
+                <div className="definition_pos">{data.partOfSpeech}</div>
                 <div></div>
             </div>
         <div className="definition_meaning">
@@ -39,28 +40,27 @@ export function Definition({definition}: DefinitionProps) {
             <ul className="definition_meaning-item">
                 {senseList}
             </ul>
-            {(hasExamples) &&
-            (<div className="definition_example">
-                {exampleList}
-            </div>)
-        }
         </div>
         
-        {(hasSynonyms) &&
-            (<div className="definition_synonyms">
+        {(hasSynonyms)
+            ? (<div className="definition_synonyms">
                 <div>Synonyms</div>
                 {synonymnsList}
             </div>)
+            : null
         }
     </div>
 }
 
-export default function DefinitionList() {
+export default function DefinitionList({data}:DefinitionListProps) {
     const dataContext = useContext(DataContext)
     const active = dataContext.data[dataContext.activeEntryId]
     const themeContext = useContext(ThemeContext)
-    const list = active.entry.map((anItem, index) => {
-        return (<Definition definition={anItem} key={index}></Definition>)
+    /* const list = active.entry.map((anItem, index) => {
+        return (<Definition definition={anItem} key={index} data={data}></Definition>)
+    }) */
+    const list = data.meanings.map((anItem, index) => {
+        return (<Definition key={index} data={anItem}></Definition>)
     })
 
     return <div ns="definition" mode={themeContext.darkMode && 'dark'}>
